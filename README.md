@@ -1,18 +1,18 @@
-The problem
+## The problem
 
 An anagram of a word is a rearrangement of its letters such that a word with a different meaning is formed. For example, if we rearrange the letters of the word Elvis we can obtain the word lives, which is one of its anagrams.
 
 In a similar way, an anagram of a sentence is a rearrangement of all the characters in the sentence such that a new sentence is formed. The new sentence consists of meaningful words, the number of which may or may not correspond to the number of words in the original sentence. For example, the sentence:
 
-I love you
+"I love you"
 
 is an anagram of the sentence:
 
-You olive
+"You olive"
 
 In this exercise, we will consider permutations of words anagrams of the sentence. In the above example:
 
-You I love
+"You I love"
 
 is considered a separate anagram.
 
@@ -25,7 +25,8 @@ Here is the general idea. We will transform the characters of the sentence into 
 Let's apply this idea to our example, the sentence You olive. Lets represent this sentence as an occurrence list of characters eiloouvy. We start by subtracting some subset of the characters, say i. We are left with the characters eloouvy.
 
 Looking into the dictionary we see that i corresponds to word I in the English language, so we found one meaningful word. We now solve the problem recursively for the rest of the characters eloouvy and obtain a list of solutions List(List(love, you), List(you, love)). We can combine I with that list to obtain sentences I love you and I you love, which are both valid anagrams.
-Representation
+
+### Representation
 
 We represent the words of a sentence with the String data type:
 
@@ -48,7 +49,8 @@ Finally, the dictionary of all the meaningful English words is represented as a 
 val dictionary: List[Word] = loadDictionary
 
 The dictionary already exists for this exercise and is loaded for you using the loadDictionary utility method.
-Computing Occurrence Lists
+
+### Computing Occurrence Lists
 
 The groupBy method takes a function mapping an element of a collection to a key of some other type, and produces a Map of keys and collections of elements which mapped to the same key. This method groups the elements, hence its name.
 
@@ -88,7 +90,8 @@ def wordOccurrences(w: Word): Occurrences
 Next, we implement another version of the method for entire sentences. We can concatenate the words of the sentence into a single word and then reuse the method wordOccurrences that we already have.
 
 def sentenceOccurrences(s: Sentence): Occurrences
-Computing Anagrams of a Word
+
+### Computing Anagrams of a Word
 
 To compute the anagrams of a word, we use the simple observation that all the anagrams of a word have the same occurrence list. To allow efficient lookup of all the words with the same occurrence list, we will have to group the words of the dictionary according to their occurrence lists.
 
@@ -97,7 +100,8 @@ lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]]
 We then implement the method wordAnagrams which returns the list of anagrams of a single word:
 
 def wordAnagrams(word: Word): List[Word]
-Computing Subsets of a Set
+
+### Computing Subsets of a Set
 
 To compute all the anagrams of a sentence, we will need a helper method which, given an occurrence list, produces all the subsets of that occurrence list.
 
@@ -124,7 +128,8 @@ List(
 The order in which you return the subsets does not matter as long as they are all included. Note that there is only one subset of an empty occurrence list, and that is the empty occurrence list itself.
 
 Hint: investigate how you can use for-comprehensions to implement parts of this method.
-Computing Anagrams of a Sentence
+
+### Computing Anagrams of a Sentence
 
 We now implement another helper method called subtract which, given two occurrence lists x and y, subtracts the frequencies of the occurrence list y from the frequencies of the occurrence list x:
 
@@ -150,7 +155,8 @@ Note that the anagram of the empty sentence is the empty sentence itself.
 Hint: First of all, think about the recursive structure of the problem: what is the base case, and how should the result of a recursive invocation be integrated in each iteration? Also, using for-comprehensions helps in finding an elegant implementation for this method.
 
 Test the sentenceAnagrams method on short sentences, no more than 10 characters. The combinations space gets huge very quickly as your sentence gets longer, so the program may run for a very long time. However for sentences such as Linux rulez, I love you or Mickey Mouse the program should end fairly quickly -- there are not many other ways to say these things.
-Further Improvement (Optional)
+
+### Further Improvement (Optional)
 
 This part is optional and is not part of an assignment, nor will be graded. You may skip this part freely.
 
